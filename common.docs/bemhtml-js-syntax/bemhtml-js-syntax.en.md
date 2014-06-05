@@ -10,7 +10,7 @@ The article describes:
 * [compatibility](#compat) of BEMHTML templates, provided with different syntax;
 * [template execution environment](#runmode) settings;
 * [BEMHTML templates processing](#run) processing flow;
-* BEMHTML template engine standard operations implementation using [JavaScript syntax](#sintax);
+* BEMHTML template engine standard operations implementation using [JavaScript syntax](#syntax);
 * templates [transform algorithm](#steps): from abbreviated syntax to JS.
 
 This article doesn't contain any information about setting development environment or template compilation procedure, BEHTML template engine features, or [BEMJSON](http://ru.bem.info/libs/bem-core/1.0.0/bemhtml/reference/#bemjson) input data format.
@@ -40,7 +40,7 @@ All the major features of BEMHTML template engine are still relevant when using 
 <a name="install"></a>
 ## Work start
 
-BEMHTML templates which use JS syntax can be executed in all BEM platform components that use bem-core library.
+BEMHTML templates which use JS syntax can be applied to all BEM platform components that use bem-core library.
 
 To migrate to JS syntax you can:
 
@@ -48,7 +48,7 @@ To migrate to JS syntax you can:
 
 * install all the packages needed by yourself: [bem-xjst](https://github.com/bem/bem-xjst), [bemhtml-compat](https://github.com/bem/bemhtml-compat), [BEMHTML API v2](https://github.com/bem/bem-core/blob/v1/.bem/techs/bemhtml.js) module from bem-tools package.
 
-BEMHTML technology module, which supports JS syntax, implemented using [API v2 технологии](http://ru.bem.info/tools/bem/bem-tools/tech-modules/#api) from bem-tools. To use it you need a bem-tools package version 0.6.4 or higher.
+BEMHTML technology module, which supports JS syntax, implemented using `API v2` технологии from bem-tools. To use it you need a bem-tools package version 0.6.4 or higher.
 
 
 ***
@@ -59,7 +59,7 @@ BEMHTML technology module, which supports JS syntax, implemented using [API v2 �
 
 BEMHTML templates implemented using different syntax can be used in one project.
 
-During the execution a template engine translates acronym-syntax templates into JS syntax. Syntax conversion is performed by [bemhtml-compat](https://github.com/bem/bemhtml-compat) module. For more information read [template execution](#run).
+During the execution a template engine translates concise-syntax templates into JS syntax. Syntax conversion is performed by [bemhtml-compat](https://github.com/bem/bemhtml-compat) module. For more information read [template execution](#run).
 
 Template syntax is automatically detected by a template engine on compile time.
 
@@ -68,18 +68,18 @@ To make it easier to distinguish template files with different syntax different 
 * for acronym-syntax - `.bemhtml`;
 * for JS syntax - `.bemhtml.xjst`.
 
-**Important:** template file can't use two syntax types at the same time.
+**Important:** template file can't be implemented in two different syntax types at the same time.
 
 
 ***
 
 
-<a name="sintax"></a>
+<a name="syntax"></a>
 ## BEMHTML templates JavaScript syntax
 
-To simplify JavaScript-syntax BEMHTML templates creation, [bem-xjst](https://github.com/bem/bem-xjst) module is used.
+To simplify creation of BEMHTML templates in JavaScript syntax, [bem-xjst](https://github.com/bem/bem-xjst) module is used.
 
-BEM-XJST is a BEM oriented helpers kit, which extends standard XJST-syntax.
+BEM-XJST is a BEM oriented helpers kit, which extends standard XJST syntax.
 
 It allows JS syntax BEMHTML templates to use:
 
@@ -88,9 +88,9 @@ It allows JS syntax BEMHTML templates to use:
 * helpers for XJST constructions `apply` and `applyNext` using default mode;
 * `applyCtx` construction.
 
-BEMXJST is a superset of a [XJST template language](https://github.com/veged/xjst), which in turn is a Javascript superset.
+BEMXJST is a superset of [XJST template language](https://github.com/veged/xjst), which in turn is Javascript superset.
 
-BEM-XJST uses canonical XJST-syntax, extended by rules, related to BEM subject domain. This kind of implementation allows BEMHTML templates with JS syntax to be executed in dev environment without preliminarily compilation.
+BEM-XJST uses canonical XJST syntax extended by rules related to BEM subject domain. This kind of implementation allows BEMHTML templates with JS syntax to be executed in dev environment without preliminarily compilation.
 
 **NB:** `apply` and `applyNext` methods behavior is extended in BEM-XJST compared to XJST. Methods can take a string literal of a statement that can be cast to a string, instead of assignment statements. It means "set string as a mode".
 
