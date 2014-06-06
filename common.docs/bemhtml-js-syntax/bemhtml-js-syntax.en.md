@@ -48,7 +48,7 @@ To migrate to JS syntax you can:
 
 * install all the packages needed by yourself: [bem-xjst](https://github.com/bem/bem-xjst), [bemhtml-compat](https://github.com/bem/bemhtml-compat), [BEMHTML API v2](https://github.com/bem/bem-core/blob/v1/.bem/techs/bemhtml.js) module from bem-tools package.
 
-BEMHTML technology module, which supports JS syntax, implemented using `API v2` технологии from bem-tools. To use it you need a bem-tools package version 0.6.4 or higher.
+BEMHTML technology module, which supports JS syntax, implemented using `API v2` technology from bem-tools. To use it you need a bem-tools package version 0.6.4 or higher.
 
 
 ***
