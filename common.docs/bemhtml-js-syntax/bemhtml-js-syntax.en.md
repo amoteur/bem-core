@@ -8,7 +8,7 @@ This article is intended for web developers and HTML layout designers, which use
 The article describes:
 
 * [compatibility](#compat) of BEMHTML templates, provided with different syntax;
-* [template execution environment](#runmode) settings;
+* [template runtime environment](#runmode) settings;
 * [BEMHTML templates processing](#run) processing flow;
 * BEMHTML template engine standard operations implementation using [JavaScript syntax](#syntax);
 * templates [transform algorithm](#steps): from abbreviated syntax to JS.
@@ -19,7 +19,7 @@ This article doesn't contain any information about setting development environme
 <a name="general"></a>
 ## General information
 
-Starting from a [bem-core](https://github.com/bem/bem-core/tree/v1) library version 1.0.0 you can execute BEMHTML templates that were written using JavaScript syntax.
+Starting from a [bem-core](https://github.com/bem/bem-core/tree/v1) library version 1.0.0 you can apply BEMHTML templates that were written using JavaScript syntax.
 The library supports two template syntax types: **acronym** and a JS syntax.
 Since the `bem-core` library introduction template acronym syntax is considered deprecated.
 
@@ -28,8 +28,8 @@ JacaScript syntax of BEMHTML templates has the following advantages:
 * development environments and tools support (because you code in JavaScript);
   * code highlight;
   * JSHint, JSLint etc;
-* fast [compilation](#run), especially in dev execution environment;
-* besides, template code can run directly in [dev execution environment](#runmode), which makes debugging simpler.
+* fast [compilation](#run), especially in dev runtime environment;
+* besides, template code can run directly in [dev runtime environment](#runmode), which makes debugging simpler.
 
 All the major features of BEMHTML template engine are still relevant when using JS syntax.
 
@@ -59,7 +59,7 @@ BEMHTML technology module, which supports JS syntax, implemented using `API v2` 
 
 BEMHTML templates implemented using different syntax can be used in one project.
 
-During the execution a template engine translates concise-syntax templates into JS syntax. Syntax conversion is performed by [bemhtml-compat](https://github.com/bem/bemhtml-compat) module. For more information read [template execution](#run).
+During the applying a template engine translates concise-syntax templates into JS syntax. Syntax conversion is performed by [bemhtml-compat](https://github.com/bem/bemhtml-compat) module. For more information read [template applying](#run).
 
 Template syntax is automatically detected by a template engine on compile time.
 
@@ -90,7 +90,7 @@ It allows JS syntax BEMHTML templates to use:
 
 BEMXJST is a superset of [XJST template language](https://github.com/veged/xjst), which in turn is Javascript superset.
 
-BEM-XJST uses canonical XJST syntax extended by rules related to BEM subject domain. This kind of implementation allows BEMHTML templates with JS syntax to be executed in dev environment without preliminarily compilation.
+BEM-XJST uses canonical XJST syntax extended by rules related to BEM subject domain. This kind of implementation allows BEMHTML templates with JS syntax to be applied to dev environment without preliminarily compilation.
 
 **NB:** `apply` and `applyNext` methods behavior is extended in BEM-XJST compared to XJST. Methods can take a string literal of a statement that can be cast to a string, instead of assignment statements. It means "set string as a mode".
 
@@ -350,7 +350,7 @@ match(this.ctx.url)(
     )`
 ```
 
-Arbitrary subpredicate `this.ctx.url` will be true when an `url` field in a context will have a value assigned. In this case template's body will be executed.
+Arbitrary subpredicate `this.ctx.url` will be true when an `url` field in a context will have a value assigned. In this case template's body will be applied.
 
 
 ***
@@ -360,7 +360,7 @@ Arbitrary subpredicate `this.ctx.url` will be true when an `url` field in a cont
 
 #### Temolate's body
 
-Template's body is an expression, and a result of it's execution is used to generate an HTML output.
+Template's body is an expression, and a result of it's apply is used to generate an HTML output.
 All of the following can be a template's body:
 
 * JavaScript statement:
@@ -420,7 +420,7 @@ block('b1').tag()('span')
 
 #### XJST expressions
 
-For templates execution in a modified contex an [XJST expressions](http://ru.bem.info/libs/bem-core/1.0.0/bemhtml/reference/#xjst) can be used in a templates implemented using JS syntax.
+For templates appliance in a modified contex an [XJST expressions](http://ru.bem.info/libs/bem-core/1.0.0/bemhtml/reference/#xjst) can be used in a templates implemented using JS syntax.
 
 They work the same way as if they were in a templates implemented in simplified syntax.
 
@@ -521,22 +521,22 @@ block('link')(
 )
 ```
 
-**NB:** it is not recommended to use ternary operators or JavaScript conditional operators to write nested templates. This kind of expressions will not be optimized in production execution environment.
+**NB:** it is not recommended to use ternary operators or JavaScript conditional operators to write nested templates. This kind of expressions will not be optimized in production runtime environment.
 
 
 <a name="runmode"></a>
-## Template execution environment
+## Template runtime environment
 
-BEMHTML template engine can work in two different modes, depending on the **execution environment settings**. The engine itself supports two execution environments:
+BEMHTML template engine can work in two different modes, depending on the **runtime environment settings**. The engine itself supports two runtime environments:
 
 * development environment (dev-environment);
 * production environment.
 
 The main difference is that in a production environment a template XJST translation takes place, and it gives optimized JavaScript as a result. It increases project build time because of templates compilation, but makes it work faster at runtime.
 
-Execution environment is chosen by a template engine depending on a `process.env.BEMHTML_ENV` environment variable value. When the value is `development` it uses a development environment, and a production environment in all other cases.
+Runtime environment is chosen by a template engine depending on a `process.env.BEMHTML_ENV` environment variable value. When the value is `development` it uses a development environment, and a production environment in all other cases.
 
-The choice of an environment affect a template execution flow, be it a simplified syntax or a JS syntax implementation.
+The choice of a runtime environment affects a template applying flow, be it a simplified syntax or a JS syntax implementation.
 
 
 <a name="run"></a>
@@ -545,19 +545,19 @@ The choice of an environment affect a template execution flow, be it a simplifie
 Template engine processes BEMHTML templates in two stages:
 
 * compilation;
-* execution.
+* applying.
 
 
 <a name="runpre"></a>
 ### Templates compilation
 
-Templates are compiled differently depending on execution environment settings and template syntax.
+Templates are compiled differently depending on runtime environment settings and template syntax.
 
 
 <a name="runclassic"></a>
 #### Simplified syntax
 
-No matter what an execution environment setting are, the following step are performed:
+No matter what an runtime environment setting are, the following step are performed:
 
 * all the BEMHTML templates present in a build are stored in a bundle file;
 * templates in a bundle file are converted to XJST syntax.
@@ -570,7 +570,7 @@ XJST translation is performed, which results in an optimized template JavaScript
 <a name="runjs"></a>
 #### JavaScript syntax
 
-No matter what an execution environment setting are, the following steps are performed:
+No matter what an runtime environment setting are, the following steps are performed:
 
 * all the BEMHTML templates present in a build are stored in a bundle file.
 
@@ -580,9 +580,9 @@ XJST translation is performed, which results in an optimized template JavaScript
 
 
 <a name="runmain"></a>
-### Templates execution
+### Applying templates
 
-JavaScript code that was obtained on a template compile time is executed the same way for all syntax and settings variation:
+JavaScript code that was obtained on a template compile time is applied the same way to all syntax and settings variation:
 
 * template engine takes a BEM-tree as an input data in [BEMJSOM](http://ru.bem.info/libs/bem-core/1.0.0/bemhtml/reference/#bemjson) format;
 * sequentially go through an input BEM-tree nodes;
@@ -770,7 +770,7 @@ block b-inner, default: applyCtx({ block: 'b-wrapper', content: this.ctx })
 JS syntax:
 
 
-While using a fragment of input BEMJSON `this.ctx` with an `applyCtx` structure in dev-environment, endless cycle is possible during the execution. To avoid it you need to add a flag, indicating that template was already processed, and subpredicate to check flag's value:
+While using a fragment of input BEMJSON `this.ctx` with an `applyCtx` structure in dev-environment, endless cycle is possible during the applying. To avoid it you need to add a flag, indicating that template was already processed, and subpredicate to check flag's value:
 
 ```js
 block('b-inner')(def()
@@ -783,7 +783,7 @@ block('b-inner')(def()
 ```
 
 
-To avoid declaring a local variable XJST expression `local` can be used to add the flag preventing endless cycle. It allows to execute template in a modified context:
+To avoid declaring a local variable XJST expression `local` can be used to add the flag preventing endless cycle. It allows to aplly template to a modified context:
 
 ```js
 block('b-inner')(def()
